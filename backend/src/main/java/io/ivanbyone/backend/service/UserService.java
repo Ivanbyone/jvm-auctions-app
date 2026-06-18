@@ -2,6 +2,7 @@ package io.ivanbyone.backend.service;
 
 import io.ivanbyone.backend.core.error.AlreadyExistsException;
 import io.ivanbyone.backend.core.error.NotFoundException;
+import io.ivanbyone.backend.core.service.HashService;
 import io.ivanbyone.backend.dto.input.UserInput;
 import io.ivanbyone.backend.dto.output.UserOutput;
 import io.ivanbyone.backend.model.User;
@@ -15,11 +16,13 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserMapper mapper;
+    private final HashService hashService;
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserMapper mapper, UserRepository userRepository) {
+    public UserService(UserMapper mapper, HashService hashService, UserRepository userRepository) {
         this.mapper = mapper;
+        this.hashService = hashService;
         this.userRepository = userRepository;
     }
 
@@ -36,6 +39,11 @@ public class UserService {
                 .ifPresent(user -> {
                     throw new AlreadyExistsException("This username is already taken");
                 });
+
+        // Hashing password
+        String pass = input.getPassword();
+        String encoded = hashService.encode(pass);
+        input.setPassword(encoded);
 
         User model = mapper.toModel(input);
         User saved = userRepository.save(model);
