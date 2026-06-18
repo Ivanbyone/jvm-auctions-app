@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,7 +39,7 @@ public class UserController {
             schema = @Schema(implementation = ResponseContract.class)
     ))
     public ResponseContract<UserOutput> getUserById(
-            @PathVariable("id") @NotBlank(message = "Path variable 'id' is required") String id
+            @PathVariable("id") @Validated @NotBlank(message = "Path variable 'id' is required") String id
     ) {
         UserOutput output = userService.getUserById(id);
         return ResponseContract.<UserOutput>builder()
@@ -59,7 +60,7 @@ public class UserController {
     @ApiResponse(responseCode = "422", content = @Content(
             schema = @Schema(implementation = ResponseContract.class)
     ))
-    public ResponseContract<UserOutput> createNewUser(@RequestBody UserInput body) {
+    public ResponseContract<UserOutput> createNewUser(@RequestBody @Validated UserInput body) {
         UserOutput output = userService.createNewUser(body);
         return ResponseContract.<UserOutput>builder()
                 .message(output)

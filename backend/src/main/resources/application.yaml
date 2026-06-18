@@ -1,6 +1,10 @@
 spring:
   application:
-    name: backend
+    name: JVM Auction Application Backend
+
+  threads:
+    virtual:
+      enabled: true
 
   devtools:
     restart:
