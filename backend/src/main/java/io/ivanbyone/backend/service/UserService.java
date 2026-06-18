@@ -8,6 +8,7 @@ import io.ivanbyone.backend.model.User;
 import io.ivanbyone.backend.repository.UserRepository;
 import io.ivanbyone.backend.service.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,6 +23,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Cacheable(value = "users", key = "#id")
     public UserOutput getUserById(String id) {
         User model = userRepository
                 .findById(id)

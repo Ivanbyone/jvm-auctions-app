@@ -16,6 +16,20 @@ services:
       - mongo_data:/data/db
     command: ["--auth"]
 
+  redisbase:
+    image: redis:8.0.5
+    container_name: redisbase
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT}:6379"
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_USER=${REDIS_USER}
+      - REDIS_USER_PASSWORD=${REDIS_USER_PASSWORD}
+    volumes:
+      - redis_data:/data
+
 volumes:
   mongo_data:
+  redis_data:
   
