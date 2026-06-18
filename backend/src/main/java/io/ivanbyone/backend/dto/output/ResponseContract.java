@@ -7,11 +7,10 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class ResponseContract<T extends OutputDto> {
+public class ResponseContract<T> {
     @Builder.Default
     private boolean success = true;
-    private String path;
-    private T body;
+    private T message;
     private int status;
     @Builder.Default
     private LocalDateTime timestamp = LocalDateTime.now();

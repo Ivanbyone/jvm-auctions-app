@@ -42,8 +42,7 @@ public class UserController {
     ) {
         UserOutput output = userService.getUserById(id);
         return ResponseContract.<UserOutput>builder()
-                .path("/user/" + id)
-                .body(output)
+                .message(output)
                 .status(200)
                 .build();
     }
@@ -63,8 +62,7 @@ public class UserController {
     public ResponseContract<UserOutput> createNewUser(@RequestBody UserInput body) {
         UserOutput output = userService.createNewUser(body);
         return ResponseContract.<UserOutput>builder()
-                .path("/user")
-                .body(output)
+                .message(output)
                 .status(201)
                 .build();
     }

@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.Date;
 
 @Data
-@Document(collation = "users")
+@Document(collection = "users")
 public class User {
     // ID
     @Id
