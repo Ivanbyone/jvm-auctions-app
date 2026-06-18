@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+
+  mongobase:
+    image: mongo:7.0.0
+    container_name: mongobase
+    restart: unless-stopped
+    ports:
+      - "${MONGODB_PORT}:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ADMINUSERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ADMINPASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGODB_INITDB}
+    volumes:
+      - mongo_data:/data/db
+    command: ["--auth"]
+
+volumes:
+  mongo_data:
+  

@@ -1,3 +1,9 @@
 spring:
   application:
     name: backend
+
+  config:
+    import: optional:file:.env[.properties]
+
+  mongodb:
+    uri: mongodb://${MONGODB_ADMINUSERNAME}:${MONGODB_ADMINPASSWORD}@${MONGODB_HOST}:${MONGODB_PORT}/${MONGODB_DATABASE}?authSource=admin
