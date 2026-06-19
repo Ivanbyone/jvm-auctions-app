@@ -1,5 +1,6 @@
 package io.ivanbyone.backend.controller;
 
+import io.ivanbyone.backend.dto.input.GiftInput;
 import io.ivanbyone.backend.dto.output.GiftOutput;
 import io.ivanbyone.backend.dto.output.ResponseContract;
 import io.ivanbyone.backend.service.GiftService;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,6 +57,23 @@ public class GiftController {
         return ResponseContract.<GiftOutput>builder()
                 .message(output)
                 .status(HttpStatus.OK.value())
+                .build();
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Create new gift", description = "Manually way to create new gift")
+    @ApiResponse(responseCode = "200", content = @Content(
+            schema = @Schema(implementation = ResponseContract.class)
+    ))
+    @ApiResponse(responseCode = "422", content = @Content(
+            schema = @Schema(implementation = ResponseContract.class)
+    ))
+    public ResponseContract<GiftOutput> createNewGift(@RequestBody @Validated GiftInput input) {
+        GiftOutput output = giftService.giftCreation(input);
+        return ResponseContract.<GiftOutput>builder()
+                .message(output)
+                .status(HttpStatus.CREATED.value())
                 .build();
     }
 }
