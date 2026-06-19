@@ -10,23 +10,16 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.Date;
 
 @Data
-@Document(collection = "users")
-public class User {
-    // ID
+@Document(collection = "gifts")
+public class Gift {
     @Id
     private String id;
-    // Public user's account name
-    // Use as login for auth
-    private String username;
-    // Hashed password
-    private String password;
-    // Account balance
-    // Default value - 0
-    @Field
-    private int balance = 0;
+    private String title;
+    private String description;
+    private String image;
+    private int free;
+    private int supply;
 
-    //    @DocumentReference
-    //    private List<Gift> gifts;
     // Auditing
     @CreatedDate
     private Date createdAt;
